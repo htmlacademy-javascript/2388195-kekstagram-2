@@ -1,114 +1,85 @@
-// ЗАДАЧА 1
+/* eslint-disable no-console */
+// /* eslint-disable no-console */
 
-// Функция для проверки длины строки.
-// Она принимает строку, которую нужно проверить,
-// и максимальную длину и возвращает true, если строка меньше или равна указанной длине,
-// и false, если строка длиннее.
-// Эта функция нам пригодится для валидации формы.
-// Примеры использования функции:
+// Задание № 5.16. Функции возвращаются
+// Делу — время.
+// // Напишите функцию, которая принимает время начала и конца рабочего дня,
+// // а также время старта и продолжительность встречи в минутах и возвращает true,
+// //  если встреча не выходит за рамки рабочего дня, и false, если выходит.
 
-// // Строка короче 20 символов
-// имяФункции('проверяемая строка', 20); // true
-// // Длина строки ровно 18 символов
-// имяФункции('проверяемая строка', 18); // true
-// // Строка длиннее 10 символов
-// имяФункции('проверяемая строка', 10); // false
+// // Время указывается в виде строки в формате часы:минуты. Для указания часов и минут могут использоваться как две цифры, так и одна.
+// // Например, 8 часов 5 минут могут быть указаны по-разному: 08:05, 8:5, 08:5 или 8:05.
 
-// Что использовать?
-// Для решения этой задачи вам потребуется объявить функцию с двумя параметрами: строкой и максимальной длиной.
-// В теле функции используйте оператор сравнения меньше или равно (<=), чтобы сравнить длину полученной строки (свойство length)
-// с максимальной длиной. Функция должна вернуть результат этого сравнения.
+// // Продолжительность задаётся числом. Гарантируется, что и рабочий день, и встреча укладываются в одни календарные сутки.
 
-// Обратите внимание, что для решения этой задачи можно использовать if/else или тернарный оператор, однако это избыточно,
-// так как операция сравнения сама по себе возвращает нужный нам результат.
+// // /*
+// // '8:00' - начало рабочего дня
+// // '17:30' - конец рабочего дня
+// // '14:00' - начало встречи
+// // 90 - продолжительность встречи в минутах
+// // */
+// // имяФункции('08:00', '17:30', '14:00', 90); // true
+// // имяФункции('8:0', '10:0', '8:0', 120);     // true
+// // имяФункции('08:00', '14:30', '14:00', 90); // false
+// // имяФункции('14:00', '17:30', '08:0', 90);  // false
+// // имяФункции('8:00', '17:30', '08:00', 900); // false
 
-// РЕШЕНИЕ:
+// const setMeeting = (workingdayStartTime, workingdayEndTime, meetingStartTime, duration) => {
 
-const checkStringLength = (string = '', maxStringLength = 1) => string.length <= maxStringLength;
+//   const workingdayStartTimeArray = workingdayStartTime.split(':');
+//   const workingdayStartTimeHour = Number(workingdayStartTimeArray[0]);
+//   const workingdayStartTimeMinute = Number(workingdayStartTimeArray[1]);
 
-checkStringLength('проверяемая строка', 20);
-checkStringLength('проверяемая строка', 18);
-checkStringLength('проверяемая строка', 10);
+//   const workingdayEndTimeArray = workingdayEndTime.split(':');
+//   const workingdayEndTimeHour = Number(workingdayEndTimeArray[0]);
+//   const workingdayEndTimeMinute = Number(workingdayEndTimeArray[1]);
 
-// ------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------
-
-// ЗАДАЧА 2
-
-// Функция для проверки, является ли строка палиндромом.
-// Палиндром — это слово или фраза, которые одинаково читаются и слева направо и справа налево.
-// Например:
-// // Строка является палиндромом
-// имяФункции('топот'); // true
-// // Несмотря на разный регистр, тоже палиндром
-// имяФункции('ДовОд'); // true
-// // Это не палиндром
-// имяФункции('Кекс');  // false
-
-// Если хотите усложнить задание, предусмотрите случай, когда в строке встречаются пробелы.
-// Они не должны учитываться при проверке!
-
-// // Это палиндром
-// имяФункции('Лёша на полке клопа нашёл '); // true
-
-// РЕШЕНИЕ:
-
-const isPalindrom = (string) => {
-  string = string.replaceAll(' ', '').toLowerCase();
-  let reversedString = '';
-  for (let i = string.length - 1; i >= 0; i--) {
-    reversedString += string[i];
-  }
-  return string === reversedString;
-};
-
-isPalindrom('топот');
-isPalindrom('ДовОд');
-isPalindrom('Кекс');
-isPalindrom('Лёша на полке клопа нашёл ');
-
-// ------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------
-
-// Дополнительное задание
-// Функция принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа.
-// Если в строке нет ни одной цифры, функция должна вернуть NaN:
-
-// имяФункции('2023 год');            // 2023
-// имяФункции('ECMAScript 2022');     // 2022
-// имяФункции('1 кефир, 0.5 батона'); // 105
-// имяФункции('агент 007');           // 7
-// имяФункции('а я томат');           // NaN
+//   const meetingStartTimeArray = meetingStartTime.split(':');
+//   const meetingStartTimeHour = Number(meetingStartTimeArray[0]);
+//   const meetingStartTimeMinute = Number(meetingStartTimeArray[1]);
 
 
-// Если хотите усложнить задание, предусмотрите случай, когда вместо строки приходит число.
-// Обратите внимание, что возвращать функция по-прежнему должна только целые положительные числа:
+//   let durationHours = Number(0);
+//   let durationMinutes = Number(duration);
+//   if (Number(duration) > 60) {
+//     durationHours = Math.floor(Number(duration) / 60);
+//     durationMinutes = Number(duration) - (durationHours * 60);
+//   }
+//   let meetingEndTimeHour = Number(meetingStartTimeHour + durationHours);
+//   let meetingEndTimeMinute = Number(meetingStartTimeMinute + durationMinutes);
+//   if(meetingEndTimeMinute >= 60) {
+//     meetingEndTimeHour += 1;
+//     meetingEndTimeMinute -= 60;
+//   }
 
-// имяФункции(2023); // 2023
-// имяФункции(-1);   // 1
-// имяФункции(1.5);  // 15
+//   if(
+//     workingdayStartTimeHour <= 23 && workingdayStartTimeMinute <= 59 &&
+//     workingdayEndTimeHour <= 23 && workingdayEndTimeMinute <= 59 &&
+//     meetingStartTimeHour <= 23 && meetingStartTimeMinute <= 59 &&
+//     meetingEndTimeHour <= 23 && meetingEndTimeMinute <= 59 &&
+//     workingdayEndTimeHour >= workingdayStartTimeHour &&
+//     meetingStartTimeHour >= workingdayStartTimeHour &&
+//     meetingStartTimeHour <= workingdayEndTimeHour) {
 
-// РЕШЕНИЕ:
+//     // console.log('данныe ok');
 
-const extractNumber = (string) => {
-  string = string.toString();
-  let result = '';
+//     if (meetingEndTimeHour < workingdayEndTimeHour) {
+//       console.log(true);
+//       return true;
+//     }
 
-  for (let i = 0; i < string.length; i++) {
-    if (!Number.isNaN(parseInt(string[i], 10))) {
-      result += string[i];
-    }
-  }
+//     if ((meetingEndTimeHour === workingdayEndTimeHour) && (meetingEndTimeMinute <= workingdayEndTimeMinute)) {
+//       console.log(true);
+//       return true;
+//     }
+//   }
 
-  return result === '' ? NaN : Number(result);
-};
-
-extractNumber(2023);
-extractNumber('2023 год');
-extractNumber('ECMAScript 2022');
-extractNumber('1 кефир, 0.5 батона');
-extractNumber('агент 007');
-extractNumber('а я томат');
-extractNumber(2023);
-extractNumber(-1);
-extractNumber(1.5);
+//   {console.log(false);
+//     return false;}
+// };
+// setMeeting('23:59', '17:30', '14:00', 59);// false
+// setMeeting('08:00', '17:30', '14:00', 90); // true
+// setMeeting('8:0', '10:0', '8:0', 120); // true
+// setMeeting('08:00', '14:30', '14:00', 90); // false
+// setMeeting('14:00', '17:30', '08:0', 90); // false
+// setMeeting('8:00', '17:30', '08:00', 900); // false

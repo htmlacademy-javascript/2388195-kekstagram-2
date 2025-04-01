@@ -24,62 +24,62 @@
 // // имяФункции('14:00', '17:30', '08:0', 90);  // false
 // // имяФункции('8:00', '17:30', '08:00', 900); // false
 
-// const setMeeting = (workingdayStartTime, workingdayEndTime, meetingStartTime, duration) => {
+const setMeeting = (workingdayStartTime, workingdayEndTime, meetingStartTime, duration) => {
 
-//   const workingdayStartTimeArray = workingdayStartTime.split(':');
-//   const workingdayStartTimeHour = Number(workingdayStartTimeArray[0]);
-//   const workingdayStartTimeMinute = Number(workingdayStartTimeArray[1]);
+  const workingdayStartTimeArray = workingdayStartTime.split(':');
+  const workingdayStartTimeHour = Number(workingdayStartTimeArray[0]);
+  const workingdayStartTimeMinute = Number(workingdayStartTimeArray[1]);
 
-//   const workingdayEndTimeArray = workingdayEndTime.split(':');
-//   const workingdayEndTimeHour = Number(workingdayEndTimeArray[0]);
-//   const workingdayEndTimeMinute = Number(workingdayEndTimeArray[1]);
+  const workingdayEndTimeArray = workingdayEndTime.split(':');
+  const workingdayEndTimeHour = Number(workingdayEndTimeArray[0]);
+  const workingdayEndTimeMinute = Number(workingdayEndTimeArray[1]);
 
-//   const meetingStartTimeArray = meetingStartTime.split(':');
-//   const meetingStartTimeHour = Number(meetingStartTimeArray[0]);
-//   const meetingStartTimeMinute = Number(meetingStartTimeArray[1]);
+  const meetingStartTimeArray = meetingStartTime.split(':');
+  const meetingStartTimeHour = Number(meetingStartTimeArray[0]);
+  const meetingStartTimeMinute = Number(meetingStartTimeArray[1]);
 
 
-//   let durationHours = Number(0);
-//   let durationMinutes = Number(duration);
-//   if (Number(duration) > 60) {
-//     durationHours = Math.floor(Number(duration) / 60);
-//     durationMinutes = Number(duration) - (durationHours * 60);
-//   }
-//   let meetingEndTimeHour = Number(meetingStartTimeHour + durationHours);
-//   let meetingEndTimeMinute = Number(meetingStartTimeMinute + durationMinutes);
-//   if(meetingEndTimeMinute >= 60) {
-//     meetingEndTimeHour += 1;
-//     meetingEndTimeMinute -= 60;
-//   }
+  let durationHours = Number(0);
+  let durationMinutes = Number(duration);
+  if (Number(duration) > 60) {
+    durationHours = Math.floor(Number(duration) / 60);
+    durationMinutes = Number(duration) - (durationHours * 60);
+  }
+  let meetingEndTimeHour = Number(meetingStartTimeHour + durationHours);
+  let meetingEndTimeMinute = Number(meetingStartTimeMinute + durationMinutes);
+  if(meetingEndTimeMinute >= 60) {
+    meetingEndTimeHour += 1;
+    meetingEndTimeMinute -= 60;
+  }
 
-//   if(
-//     workingdayStartTimeHour <= 23 && workingdayStartTimeMinute <= 59 &&
-//     workingdayEndTimeHour <= 23 && workingdayEndTimeMinute <= 59 &&
-//     meetingStartTimeHour <= 23 && meetingStartTimeMinute <= 59 &&
-//     meetingEndTimeHour <= 23 && meetingEndTimeMinute <= 59 &&
-//     workingdayEndTimeHour >= workingdayStartTimeHour &&
-//     meetingStartTimeHour >= workingdayStartTimeHour &&
-//     meetingStartTimeHour <= workingdayEndTimeHour) {
+  if(
+    workingdayStartTimeHour <= 23 && workingdayStartTimeMinute <= 59 &&
+    workingdayEndTimeHour <= 23 && workingdayEndTimeMinute <= 59 &&
+    meetingStartTimeHour <= 23 && meetingStartTimeMinute <= 59 &&
+    meetingEndTimeHour <= 23 && meetingEndTimeMinute <= 59 &&
+    workingdayEndTimeHour >= workingdayStartTimeHour &&
+    meetingStartTimeHour >= workingdayStartTimeHour &&
+    meetingStartTimeHour <= workingdayEndTimeHour) {
 
-//     // console.log('данныe ok');
+    // console.log('данныe ok');
 
-//     if (meetingEndTimeHour < workingdayEndTimeHour) {
-//       console.log(true);
-//       return true;
-//     }
+    if (meetingEndTimeHour < workingdayEndTimeHour) {
+      console.log(true);
+      return true;
+    }
 
-//     if ((meetingEndTimeHour === workingdayEndTimeHour) && (meetingEndTimeMinute <= workingdayEndTimeMinute)) {
-//       console.log(true);
-//       return true;
-//     }
-//   }
+    if ((meetingEndTimeHour === workingdayEndTimeHour) && (meetingEndTimeMinute <= workingdayEndTimeMinute)) {
+      console.log(true);
+      return true;
+    }
+  }
 
-//   {console.log(false);
-//     return false;}
-// };
-// setMeeting('23:59', '17:30', '14:00', 59);// false
-// setMeeting('08:00', '17:30', '14:00', 90); // true
-// setMeeting('8:0', '10:0', '8:0', 120); // true
-// setMeeting('08:00', '14:30', '14:00', 90); // false
-// setMeeting('14:00', '17:30', '08:0', 90); // false
-// setMeeting('8:00', '17:30', '08:00', 900); // false
+  {console.log(false);
+    return false;}
+};
+
+setMeeting('08:00', '17:30', '14:00', 90); // true
+setMeeting('8:0', '10:0', '8:0', 120); // true
+setMeeting('08:00', '14:30', '14:00', 90); // false
+setMeeting('14:00', '17:30', '08:0', 90); // false
+setMeeting('8:00', '17:30', '08:00', 900); // false

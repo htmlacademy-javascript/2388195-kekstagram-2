@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -60,5 +59,5 @@ const createPhoto = (_,index) => ({
 const createPhotoDescriptions = () => Array.from({length: SIMILAR_PHOTO_COUNT}, createPhoto);
 
 const photos = createPhotoDescriptions();
-// console.log(photos);
+
 export {photos};

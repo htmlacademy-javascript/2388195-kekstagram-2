@@ -1,5 +1,3 @@
-import {photos} from './data.js';
-
 const picturesContainer = document.querySelector('.pictures');
 const pictureFragment = document.createDocumentFragment();
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -15,11 +13,12 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
+const renderThumbnail = (photos) => {
+  photos.forEach((photo) => {
+    const thumbnail = createThumbnail(photo);
+    pictureFragment.appendChild(thumbnail);
+  });
+  picturesContainer.appendChild(pictureFragment);
+};
 
-photos.forEach((photo) => {
-  const thumbnail = createThumbnail(photo);
-  pictureFragment.appendChild(thumbnail);
-});
-picturesContainer.appendChild(pictureFragment);
-// console.log(picturesContainer);
-export {picturesContainer};
+export {renderThumbnail};

@@ -1,11 +1,11 @@
 import {isEscapeKey} from './util.js';
-// import {photos} from './data.js';
 import {clearComments, renderComments} from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigPicture.querySelector('.likes-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
+const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 
 
 const onDocumentKeyDown = (evt) => {
@@ -21,6 +21,7 @@ function closeBigPicture() {//Function Declaration чтобы не ругалс�
 
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeyDown);
+  bigPictureCloseButton.removeEventListener('click', closeBigPicture);
   document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
 }
 
@@ -37,7 +38,7 @@ const openBigPicture = (currentPictureId, photos) => {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeyDown);
   document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями позади не прокручивался
-  const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
+  // const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
   bigPictureCloseButton.addEventListener('click', closeBigPicture);//почему так работает?
   // bigPictureCloseButton.addEventListener('click', () => {
   //   closeBigPicture();
@@ -56,5 +57,4 @@ const renderBigPicture = (data) => {
   );
 };
 
-// bigPictureCloseButton.addEventListener('click', closeBigPicture());
 export {renderBigPicture};

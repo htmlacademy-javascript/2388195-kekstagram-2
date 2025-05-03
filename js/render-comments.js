@@ -1,4 +1,4 @@
-const COUNT_SHOWCOMMENTS = 5;
+const COUNT_SHOW_COMMENTS = 5;
 let currentCount = 0;
 let currentСomments = [];
 
@@ -12,7 +12,7 @@ const totalCommentCount = bigPicture.querySelector('.social__comment-total-count
 socialComments.innerHTML = '';
 
 const renderNextComments = () => {
-  const renderedComments = currentСomments.slice(currentCount, COUNT_SHOWCOMMENTS + currentCount);
+  const renderedComments = currentСomments.slice(currentCount, COUNT_SHOW_COMMENTS + currentCount);
   const renderedCommentsLength = renderedComments.length + currentCount;
   const commentsFragment = document.createDocumentFragment();
 
@@ -32,7 +32,7 @@ const renderNextComments = () => {
     commentsLoaderButton.classList.add('hidden');
   }
 
-  currentCount += COUNT_SHOWCOMMENTS;
+  currentCount += COUNT_SHOW_COMMENTS;
 };
 
 const renderComments = (currentPhotoСomments) => {

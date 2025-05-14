@@ -39,10 +39,8 @@ const openBigPicture = (currentPictureId, photos) => {
   document.addEventListener('keydown', onDocumentKeyDown);
   document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями позади не прокручивался
   // const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
-  bigPictureCloseButton.addEventListener('click', closeBigPicture);//почему так работает?
-  // bigPictureCloseButton.addEventListener('click', () => {
-  //   closeBigPicture();
-  // });
+  bigPictureCloseButton.addEventListener('click', closeBigPicture);
+
 };
 
 

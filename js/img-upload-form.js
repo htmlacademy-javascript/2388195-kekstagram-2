@@ -45,10 +45,12 @@ const onFormSubmit = (evt) => {
 
 pristine.addValidator(inputHashtags, isHashtagValid, error, 2, false);
 
-pristine.addValidator(inputDescription, (value) => {
-  const hasNumber = value.length <= 140 ;
-  return hasNumber; //если true - ошибки нет
-}, 'не более 140 символов');
+
+//Перед защитой уберу:
+// pristine.addValidator(inputDescription, (value) => {
+//   const hasNumber = value.length <= 140 ;
+//   return hasNumber; //если true - ошибки нет
+// }, 'не более 140 символов');
 
 function openImgEditor() {
   imgEditor.classList.remove('hidden');

@@ -25,4 +25,10 @@ const onBiggerClick = () => {
   imgPreview.style.transform = `scale(${scaleValue})`;
 };
 
-export {onSmallerClick, onBiggerClick};
+const resetScaleControl = () => {
+  scaleValue = 1;
+  valueScaleControl.value = `${MAX_SCALE_VALUE * 100}%`;
+  imgPreview.style.transform = `scale(${MAX_SCALE_VALUE})`;
+};
+
+export {onSmallerClick, onBiggerClick, resetScaleControl};

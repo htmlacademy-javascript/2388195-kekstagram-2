@@ -8,7 +8,6 @@ const error = () => errorMessage;
 
 
 const isHashtagValid = (value) => {
-  // value = 0;
   errorMessage = '';
 
   const inputText = value.toLowerCase().trim();

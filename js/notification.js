@@ -1,7 +1,7 @@
-import {isEscapeKey} from './util.js';
-import {onDocumentKeyDown} from './img-upload-form.js';
+import {isEscapeKey, KeyMessages} from './util.js';
 
 const ALERT_SHOW_TIME = 5000;
+const body = document.body;
 
 const showDataError = () => {
   const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
@@ -13,81 +13,31 @@ const showDataError = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const showSuccessMessage = () => {
-  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successMessageContainer = successMessageTemplate.cloneNode(true);
-  const successButton = successMessageContainer.querySelector('.success__button');
-  document.body.append(successMessageContainer);
+const showNotification = (elem, cbKeyDown) => {
+  const messageTemplate = document.querySelector(`#${elem}`).content.querySelector(`.${elem}`);
+  const messageContainer = messageTemplate.cloneNode(true);
+  const button = messageContainer.querySelector('button');
+  document.body.append(messageContainer);
   document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями не прокручивался
-  const onSuccessButtonClick = () => {
-    successMessageContainer.remove();
-    document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-  };
-  function onDocumentSuccessMessageKeyDown (evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      successMessageContainer.remove();
+
+  function closeNotification (evt) {
+    evt.stopPropagation();
+    const inner = messageContainer.querySelector(`.${elem}__inner`);
+    const innerTitle = messageContainer.querySelector(`.${elem}__title`);
+    if (evt.target !== inner && evt.target !== innerTitle || evt.target === button || isEscapeKey(evt)) {
+      messageContainer.remove();
       document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentSuccessMessageKeyDown);
-      document.removeEventListener('click', onOutsideSuccessMessageClick);
+      body.removeEventListener('keydown', closeNotification);
+      body.removeEventListener('click', closeNotification);
+      if (elem === KeyMessages.Error) {
+        document.addEventListener('keydown', cbKeyDown);
+      }
     }
   }
 
-  function onOutsideSuccessMessageClick (evt) {
-    const successInner = successMessageContainer.querySelector('.success__inner');
-    const successInnerTitle = successMessageContainer.querySelector('.success__title');
-    if (evt.target !== successInner && evt.target !== successInnerTitle) {
-      successMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentSuccessMessageKeyDown);
-      document.removeEventListener('click', onOutsideSuccessMessageClick);
-    }
-  }
-
-  successButton.addEventListener('click', onSuccessButtonClick);
-  document.addEventListener('keydown', onDocumentSuccessMessageKeyDown);
-  document.addEventListener('click', onOutsideSuccessMessageClick);
+  button.addEventListener('click', closeNotification);
+  body.addEventListener('keydown', closeNotification);
+  body.addEventListener('click', closeNotification);
 };
 
-
-const showErrorMessage = () => {
-  const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorMessageContainer = errorMessageTemplate.cloneNode(true);
-  const errorButton = errorMessageContainer.querySelector('.error__button');
-  document.body.append(errorMessageContainer);
-  document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями не прокручивался
-  const onErrorButtonClick = () => {
-    errorMessageContainer.remove();
-    document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-    document.addEventListener('keydown', onDocumentKeyDown);
-  };
-  function onDocumentErrorMessageKeyDown (evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      errorMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentErrorMessageKeyDown);
-      document.removeEventListener('click', onOutsideErrorMessageClick);
-      document.addEventListener('keydown', onDocumentKeyDown);
-    }
-  }
-
-  function onOutsideErrorMessageClick (evt) {
-    const errorInner = errorMessageContainer.querySelector('.error__inner');
-    const errorInnerTitle = errorMessageContainer.querySelector('.error__title');
-    if (evt.target !== errorInner && evt.target !== errorInnerTitle) {
-      errorMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentErrorMessageKeyDown);
-      document.removeEventListener('click', onOutsideErrorMessageClick);
-      document.addEventListener('keydown', onDocumentKeyDown);
-    }
-  }
-
-  errorButton.addEventListener('click', onErrorButtonClick);
-  document.addEventListener('keydown', onDocumentErrorMessageKeyDown);
-  document.addEventListener('click', onOutsideErrorMessageClick);
-};
-
-
-export {showDataError, showSuccessMessage, showErrorMessage};
+export {showDataError, showNotification};

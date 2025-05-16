@@ -9,4 +9,9 @@ const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
     : genitiveSingular;
 };
 
-export {isEscapeKey, numDecline};
+const KeyMessages = {
+  Success: 'success',
+  Error: 'error'
+};
+
+export {isEscapeKey, numDecline, KeyMessages};

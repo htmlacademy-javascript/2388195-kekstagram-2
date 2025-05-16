@@ -1,5 +1,3 @@
-const ALERT_SHOW_TIME = 5000;
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
@@ -11,14 +9,4 @@ const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
     : genitiveSingular;
 };
 
-const showDataError = () => {
-  const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-  const dataErrorContainer = dataErrorTemplate.cloneNode(true);
-  document.body.append(dataErrorContainer);
-
-  setTimeout(() => {
-    dataErrorContainer.remove();
-  }, ALERT_SHOW_TIME);
-};
-
-export {isEscapeKey, numDecline, showDataError};
+export {isEscapeKey, numDecline};

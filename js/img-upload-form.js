@@ -1,4 +1,5 @@
-import {isEscapeKey, showDataError} from './util.js';
+import {isEscapeKey} from './util.js';
+import {showDataError, showSuccessMessage, showErrorMessage} from './notification.js';
 import {onSmallerClick, onBiggerClick, resetScaleControl} from './scale-buttons.js';
 import {isHashtagValid, error} from './is-hashtag-valid.js';
 import {onEffectButtonClick, resetFilter} from './slider.js';
@@ -53,88 +54,6 @@ const pristine = new Pristine(imgUploadForm, {
 });
 
 pristine.addValidator(inputHashtags, isHashtagValid, error, 2, false);
-
-//Перед защитой уберу:
-// pristine.addValidator(inputDescription, (value) => {
-//   const hasNumber = value.length <= 140 ;
-//   return hasNumber; //если true - ошибки нет
-// }, 'не более 140 символов');
-
-const showSuccessMessage = () => {
-  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successMessageContainer = successMessageTemplate.cloneNode(true);
-  const successButton = successMessageContainer.querySelector('.success__button');
-  document.body.append(successMessageContainer);
-  document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями не прокручивался
-  const onSuccessButtonClick = () => {
-    successMessageContainer.remove();
-    document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-  };
-  function onDocumentSuccessMessageKeyDown (evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      successMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentSuccessMessageKeyDown);
-      document.removeEventListener('click', onOutsideSuccessMessageClick);
-    }
-  }
-
-  function onOutsideSuccessMessageClick (evt) {
-    const successInner = successMessageContainer.querySelector('.success__inner');
-    const successInnerTitle = successMessageContainer.querySelector('.success__title');
-    if (evt.target !== successInner && evt.target !== successInnerTitle) {
-      successMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentSuccessMessageKeyDown);
-      document.removeEventListener('click', onOutsideSuccessMessageClick);
-    }
-  }
-
-  successButton.addEventListener('click', onSuccessButtonClick);
-  document.addEventListener('keydown', onDocumentSuccessMessageKeyDown);
-  document.addEventListener('click', onOutsideSuccessMessageClick);
-};
-
-
-const showErrorMessage = () => {
-  const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorMessageContainer = errorMessageTemplate.cloneNode(true);
-  const errorButton = errorMessageContainer.querySelector('.error__button');
-  document.body.append(errorMessageContainer);
-  document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями не прокручивался
-  const onErrorButtonClick = () => {
-    errorMessageContainer.remove();
-    document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-    document.addEventListener('keydown', onDocumentKeyDown);
-  };
-  function onDocumentErrorMessageKeyDown (evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      errorMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentErrorMessageKeyDown);
-      document.removeEventListener('click', onOutsideErrorMessageClick);
-      document.addEventListener('keydown', onDocumentKeyDown);
-    }
-  }
-
-  function onOutsideErrorMessageClick (evt) {
-    const errorInner = errorMessageContainer.querySelector('.error__inner');
-    const errorInnerTitle = errorMessageContainer.querySelector('.error__title');
-    if (evt.target !== errorInner && evt.target !== errorInnerTitle) {
-      errorMessageContainer.remove();
-      document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      document.removeEventListener('keydown', onDocumentErrorMessageKeyDown);
-      document.removeEventListener('click', onOutsideErrorMessageClick);
-      document.addEventListener('keydown', onDocumentKeyDown);
-    }
-  }
-
-  errorButton.addEventListener('click', onErrorButtonClick);
-  document.addEventListener('keydown', onDocumentErrorMessageKeyDown);
-  document.addEventListener('click', onOutsideErrorMessageClick);
-};
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
@@ -222,4 +141,4 @@ const renderImgEditor = () => {
   imgUploadInput.addEventListener('change', openImgEditor);
 };
 
-export {renderImgEditor};
+export {renderImgEditor, onDocumentKeyDown};

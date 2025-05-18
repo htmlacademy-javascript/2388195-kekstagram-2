@@ -1,8 +1,16 @@
-import {photos} from './data.js';
+import {showDataError} from './notification.js';
 import {renderThumbnail} from './render-thumbnails.js';
 import {renderBigPicture} from './render-big-picture.js';
 import {renderImgEditor} from './img-upload-form.js';
+import {getData} from './api.js';
 
-renderThumbnail(photos);
-renderBigPicture(photos);
+getData()
+  .then((data) => {
+    renderThumbnail(data);
+    renderBigPicture(data);
+  })
+  .catch((err) => {
+    showDataError(err.message);
+  });
+
 renderImgEditor();

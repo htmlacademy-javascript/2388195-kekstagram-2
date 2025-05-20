@@ -49,4 +49,3 @@ const clearComments = () => {
 };
 
 export {clearComments, renderComments};
-

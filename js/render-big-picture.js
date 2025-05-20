@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {renderThumbnail, clearThumbnail} from './render-thumbnails.js';
 import {clearComments, renderComments} from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -6,6 +7,7 @@ const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelecto
 const likesCount = bigPicture.querySelector('.likes-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
+const picturesContainer = document.querySelector('.pictures');
 
 
 const onDocumentKeyDown = (evt) => {
@@ -16,7 +18,7 @@ const onDocumentKeyDown = (evt) => {
 };
 
 //закрыть BigPicture
-function closeBigPicture() {//Function Declaration чтобы не ругался линтер
+function closeBigPicture() {
   clearComments();
 
   bigPicture.classList.add('hidden');
@@ -25,7 +27,7 @@ function closeBigPicture() {//Function Declaration чтобы не ругалс�
   document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
 }
 
-//открыть BigPicture
+// открыть BigPicture
 const openBigPicture = (currentPictureId, photos) => {
   const currentPhoto = photos.find((photo) => photo.id === Number(currentPictureId));
   bigPictureImg.src = currentPhoto.url;
@@ -38,19 +40,17 @@ const openBigPicture = (currentPictureId, photos) => {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeyDown);
   document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями позади не прокручивался
-  // const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
   bigPictureCloseButton.addEventListener('click', closeBigPicture);
-
 };
 
-
 const renderBigPicture = (data) => {
-  const pictures = document.querySelectorAll('.picture');
+  clearThumbnail();
+  renderThumbnail(data);
+  const pictures = picturesContainer.querySelectorAll('.picture');
   pictures.forEach((item) =>
     item.addEventListener('click', (evt) => {
       evt.preventDefault(); //заблокирован переход по ссылке
       openBigPicture(item.dataset.id, data);
-
     })
   );
 };

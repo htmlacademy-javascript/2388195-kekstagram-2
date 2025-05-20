@@ -4,6 +4,7 @@ import {onSmallerClick, onBiggerClick, resetScaleControl} from './scale-buttons.
 import {isHashtagValid, error} from './is-hashtag-valid.js';
 import {onEffectButtonClick, resetFilter} from './slider.js';
 import {sendData} from './api.js';
+import {renderImgPreview} from './img-preview-upload.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
@@ -58,7 +59,7 @@ pristine.addValidator(inputHashtags, isHashtagValid, error, 2, false);
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   if(pristine.validate()) {
-    inputHashtags.value = inputHashtags.value.trim().replaceAll(/\s+/g, ' '); //С g флагом поиск ищет все совпадения, без него – только первое.
+    inputHashtags.value = inputHashtags.value.trim().replaceAll(/\s+/g, ' ');
     blockSubmitButton();
     sendData(new FormData(evt.target))
       .then(closeImgEditor)
@@ -76,7 +77,8 @@ const onFormSubmit = (evt) => {
 
 function openImgEditor() {
   imgEditor.classList.remove('hidden');
-  document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями не прокручивался
+  renderImgPreview();
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeyDown);
   imgEditorCancelButton.addEventListener('click', closeImgEditor);
 
@@ -94,7 +96,7 @@ function openImgEditor() {
 function closeImgEditor() {
   imgEditor.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeyDown);
-  document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
+  document.body.classList.remove('modal-open');
   imgEditorCancelButton.removeEventListener('click', closeImgEditor);
 
   smallerScaleControl.removeEventListener('click', onSmallerClick);
@@ -117,4 +119,4 @@ const renderImgEditor = () => {
   imgUploadInput.addEventListener('change', openImgEditor);
 };
 
-export {renderImgEditor, onDocumentKeyDown};
+export {renderImgEditor, onDocumentKeyDown, closeImgEditor};

@@ -1,11 +1,13 @@
 import {isEscapeKey, KeyMessages} from './util.js';
 
 const ALERT_SHOW_TIME = 5000;
-const body = document.body;
+const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 
-const showDataError = () => {
-  const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+const showToastError = (errMessage) => {
   const dataErrorContainer = dataErrorTemplate.cloneNode(true);
+  if (errMessage) {
+    dataErrorContainer.querySelector('.data-error__title').textContent = errMessage;
+  }
   document.body.append(dataErrorContainer);
 
   setTimeout(() => {
@@ -13,8 +15,12 @@ const showDataError = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const showNotification = (elem, cbKeyDown) => {
-  const messageTemplate = document.querySelector(`#${elem}`).content.querySelector(`.${elem}`);
+const showDataError = () => {
+  showToastError();
+};
+
+const showNotification = (element, cbKeyDown) => {
+  const messageTemplate = document.querySelector(`#${element}`).content.querySelector(`.${element}`);
   const messageContainer = messageTemplate.cloneNode(true);
   const button = messageContainer.querySelector('button');
   document.body.append(messageContainer);
@@ -22,22 +28,21 @@ const showNotification = (elem, cbKeyDown) => {
 
   function closeNotification (evt) {
     evt.stopPropagation();
-    const inner = messageContainer.querySelector(`.${elem}__inner`);
-    const innerTitle = messageContainer.querySelector(`.${elem}__title`);
-    if (evt.target !== inner && evt.target !== innerTitle || evt.target === button || isEscapeKey(evt)) {
+    const hasElementTarget = [messageContainer, button].includes(evt.target); //(evt.target === messageContainer || evt.target === button)
+    if (hasElementTarget || isEscapeKey(evt)) {
       messageContainer.remove();
       document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
-      body.removeEventListener('keydown', closeNotification);
-      body.removeEventListener('click', closeNotification);
-      if (elem === KeyMessages.Error) {
+      document.body.removeEventListener('keydown', closeNotification);
+      document.body.removeEventListener('click', closeNotification);
+      if (element === KeyMessages.Error) {
         document.addEventListener('keydown', cbKeyDown);
       }
     }
   }
 
   button.addEventListener('click', closeNotification);
-  body.addEventListener('keydown', closeNotification);
-  body.addEventListener('click', closeNotification);
+  document.body.addEventListener('keydown', closeNotification);
+  document.body.addEventListener('click', closeNotification);
 };
 
-export {showDataError, showNotification};
+export {showDataError, showNotification, showToastError};

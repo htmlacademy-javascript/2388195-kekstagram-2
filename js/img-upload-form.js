@@ -37,7 +37,6 @@ const onHashtagInput = () => {
   isHashtagValid(inputHashtags.value);
 };
 
-// Блокировка кнопки 'Опубликовать'
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
@@ -63,12 +62,12 @@ const onFormSubmit = (evt) => {
     blockSubmitButton();
     sendData(new FormData(evt.target))
       .then(closeImgEditor)
-      .then(() => showNotification(KeyMessages.Success, onDocumentKeyDown))
+      .then(() => showNotification(KeyMessages.SUCCESS, onDocumentKeyDown))
       .catch(
         (err) => {
           showDataError(err.message);
           document.removeEventListener('keydown', onDocumentKeyDown);
-          showNotification(KeyMessages.Error, onDocumentKeyDown);
+          showNotification(KeyMessages.ERROR, onDocumentKeyDown);
         }
       )
       .finally(unblockSubmitButton);

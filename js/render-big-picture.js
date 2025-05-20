@@ -17,17 +17,15 @@ const onDocumentKeyDown = (evt) => {
   }
 };
 
-//закрыть BigPicture
 function closeBigPicture() {
   clearComments();
 
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeyDown);
   bigPictureCloseButton.removeEventListener('click', closeBigPicture);
-  document.body.classList.remove('modal-open'); //чтобы контейнер с фотографиями прокручивался
+  document.body.classList.remove('modal-open');
 }
 
-// открыть BigPicture
 const openBigPicture = (currentPictureId, photos) => {
   const currentPhoto = photos.find((photo) => photo.id === Number(currentPictureId));
   bigPictureImg.src = currentPhoto.url;
@@ -39,7 +37,7 @@ const openBigPicture = (currentPictureId, photos) => {
 
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeyDown);
-  document.body.classList.add('modal-open'); //чтобы контейнер с фотографиями позади не прокручивался
+  document.body.classList.add('modal-open');
   bigPictureCloseButton.addEventListener('click', closeBigPicture);
 };
 
@@ -49,7 +47,7 @@ const renderBigPicture = (data) => {
   const pictures = picturesContainer.querySelectorAll('.picture');
   pictures.forEach((item) =>
     item.addEventListener('click', (evt) => {
-      evt.preventDefault(); //заблокирован переход по ссылке
+      evt.preventDefault();
       openBigPicture(item.dataset.id, data);
     })
   );

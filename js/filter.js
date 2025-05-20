@@ -17,7 +17,7 @@ const MAX_PICTURE_COUNT = 10;
 let currentFilter = Filter.DEFAULT;
 let pictures = [];
 const filterContainer = document.querySelector('.img-filters');
-const filterForm = document.querySelector('.img-filters__form');
+const filterForm = filterContainer.querySelector('.img-filters__form');
 const activeButtonClass = 'img-filters__button--active';
 const debounceRender = debounce(renderBigPicture);
 
@@ -55,8 +55,10 @@ const onFilterChange = (evt) => {
   applyFilter();
 };
 
-export const configFilter = (picturesData) => {
+const configFilter = (picturesData) => {
   filterContainer.classList.remove('img-filters--inactive');
   pictures = picturesData;
   filterForm.addEventListener('click', onFilterChange);
 };
+
+export {configFilter};

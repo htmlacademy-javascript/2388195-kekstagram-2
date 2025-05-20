@@ -16,7 +16,7 @@ const isHashtagValid = (value) => {
     return true;
   }
 
-  const inputArray = inputText.split(/\s+/); //- \s - пробел, табуляция и прочее (+ - пробел 1 и более)
+  const inputArray = inputText.split(/\s+/);
 
   const rules = [
     {
@@ -24,7 +24,7 @@ const isHashtagValid = (value) => {
       error: 'Хэштег не может состоять из одной решетки',
     },
     {
-      check: inputArray.some((item) => item.slice(1).includes('#')), //новый массив, в который копирует все элементы с индекса start до end (не включая end).
+      check: inputArray.some((item) => item.slice(1).includes('#')),
       error: 'Хэштеги разделяются пробелами',
     },
     {
@@ -46,8 +46,8 @@ const isHashtagValid = (value) => {
       )}`,
     },
     {
-      check: inputArray.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)), // i-поиск не зависит от регистра: нет разницы между A и a
-      error: 'Хэштег содержит недопустимые символы', //test(item) проверяет, есть ли хоть одно совпадение, если да, то возвращает true, иначе false.
+      check: inputArray.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
+      error: 'Хэштег содержит недопустимые символы',
     },
   ];
 
@@ -55,7 +55,7 @@ const isHashtagValid = (value) => {
     return true;
   }
 
-  return rules.every((rule) => { //return здесь чтобы обновлялось значение функции
+  return rules.every((rule) => {
     const isError = rule.check;
     if(isError) {
       errorMessage = rule.error;

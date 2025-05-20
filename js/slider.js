@@ -1,8 +1,8 @@
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgPreview = imgUploadForm.querySelector('.img-upload__preview').querySelector('img');
 const effectInput = imgUploadForm.querySelector('.effect-level__value');
-const slider = imgUploadForm.querySelector('.effect-level__slider'); //div
-const sliderContainer = imgUploadForm.querySelector('.img-upload__effect-level'); //fieldset
+const slider = imgUploadForm.querySelector('.effect-level__slider');
+const sliderContainer = imgUploadForm.querySelector('.img-upload__effect-level');
 
 const getChromeFilter = (value) => `grayscale(${value})`;
 const getSepiaFilter = (value) => `sepia(${value})`;

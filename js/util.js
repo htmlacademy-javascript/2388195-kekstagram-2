@@ -12,8 +12,8 @@ const numDecline = (num, nominative, genitiveSingular, genitivePlural) => {
 };
 
 const KeyMessages = {
-  Success: 'success',
-  Error: 'error'
+  SUCCESS: 'success',
+  ERROR: 'error'
 };
 
 const debounce = (callback, timeoutDelay = DEBOUNCE_DELAY) => {

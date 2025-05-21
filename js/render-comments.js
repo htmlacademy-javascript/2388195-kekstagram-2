@@ -1,6 +1,6 @@
 const COUNT_SHOW_COMMENTS = 5;
 let currentCount = 0;
-let currentСomments = [];
+let currentComments = [];
 
 const bigPicture = document.querySelector('.big-picture');
 const socialComments = bigPicture.querySelector('.social__comments');
@@ -12,7 +12,7 @@ const totalCommentCount = bigPicture.querySelector('.social__comment-total-count
 socialComments.innerHTML = '';
 
 const renderNextComments = () => {
-  const renderedComments = currentСomments.slice(currentCount, COUNT_SHOW_COMMENTS + currentCount);
+  const renderedComments = currentComments.slice(currentCount, COUNT_SHOW_COMMENTS + currentCount);
   const renderedCommentsLength = renderedComments.length + currentCount;
   const commentsFragment = document.createDocumentFragment();
 
@@ -26,17 +26,17 @@ const renderNextComments = () => {
   socialComments.appendChild(commentsFragment);
 
   shownCommentCount.textContent = renderedCommentsLength;
-  totalCommentCount.textContent = currentСomments.length;
+  totalCommentCount.textContent = currentComments.length;
 
-  if (renderedCommentsLength === currentСomments.length) {
+  if (renderedCommentsLength === currentComments.length) {
     commentsLoaderButton.classList.add('hidden');
   }
 
   currentCount += COUNT_SHOW_COMMENTS;
 };
 
-const renderComments = (currentPhotoСomments) => {
-  currentСomments = currentPhotoСomments;
+const renderComments = (currentPhotoComments) => {
+  currentComments = currentPhotoComments;
   renderNextComments();
   commentsLoaderButton.addEventListener('click', renderNextComments);
 };

@@ -96,7 +96,7 @@ const onEffectButtonClick = (evt) => {
   currentButton.checked = true;
   updateSliderOptions(currentButton.value);
   slider.noUiSlider.on('update', () => {
-    effectInput.value = slider.noUiSlider.get();
+    effectInput.value = Number(slider.noUiSlider.get());
     if (currentButton.checked) {
       if(currentButton.value !== 'none') {
         sliderContainer.classList.remove('hidden');

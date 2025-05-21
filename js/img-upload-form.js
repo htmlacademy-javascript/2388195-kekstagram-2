@@ -37,14 +37,9 @@ const onHashtagInput = () => {
   isHashtagValid(inputHashtags.value);
 };
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+const blockSubmitButton = (isDisabled, buttonText) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = buttonText;
 };
 
 const pristine = new Pristine(imgUploadForm, {
@@ -59,7 +54,7 @@ const onFormSubmit = (evt) => {
   evt.preventDefault();
   if(pristine.validate()) {
     inputHashtags.value = inputHashtags.value.trim().replaceAll(/\s+/g, ' ');
-    blockSubmitButton();
+    blockSubmitButton(true, SubmitButtonText.SENDING);
     sendData(new FormData(evt.target))
       .then(closeImgEditor)
       .then(() => showNotification(KeyMessages.SUCCESS, onDocumentKeyDown))
@@ -70,7 +65,7 @@ const onFormSubmit = (evt) => {
           showNotification(KeyMessages.ERROR, onDocumentKeyDown);
         }
       )
-      .finally(unblockSubmitButton);
+      .finally(() => blockSubmitButton(false, SubmitButtonText.IDLE));
   }
 };
 
